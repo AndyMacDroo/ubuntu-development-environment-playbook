@@ -9,9 +9,8 @@
 
 - name: Install required docker apt packages
   apt:
-    name: "{{ item }}"
+    name: "{{ apt_packages_for_docker }}"
     state: present
-  with_items: "{{ apt_packages_for_docker }}"
   ignore_errors: yes
 
 - name: Get docker signing key
@@ -26,15 +25,13 @@
 
 - name: Install required apt packages
   apt:
-    name: "{{ item }}"
+    name: "{{ apt_packages_to_install }}"
     state: present
-  with_items: "{{ apt_packages_to_install }}"
 
 - name: Remove unrequired apt packages
   apt:
-    name: "{{ item }}"
+    name: "{{ apt_packages_to_remove }}"
     state: absent
-  with_items: "{{ apt_packages_to_remove }}"
   ignore_errors: yes
 
 - name: Add user to docker group
