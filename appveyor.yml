@@ -1,20 +1,35 @@
 version: '1.0.{build}-{branch}'
-image: Ubuntu1804
-platform: x64
-
-cache:
-- /home/appveyor/.vagrant.d/boxes
-
+os: Windows Server 2012
+platform:
+  - x64
+init:
+- ps: |
+    mkdir C:\Users\appveyor\.vagrant.d | Out-Null
+    echo @'
+    Vagrant::configure('2') do |config|
+      config.vm.boot_timeout = 1020
+    end
+    '@ | Out-File -encoding UTF8 C:\Users\appveyor\.vagrant.d\Vagrantfile
+- ps: |
+    mkdir C:\downloads | Out-Null
+    cd C:\downloads
+    Start-FileDownload "https://dl.bintray.com/mitchellh/vagrant/vagrant_1.7.2.msi"
+    Start-Process -FilePath "msiexec.exe" -ArgumentList "/a vagrant_1.7.2.msi /qb TARGETDIR=C:\Vagrant-1.7.2" -Wait
+    Start-FileDownload "http://download.virtualbox.org/virtualbox/4.3.12/VirtualBox-4.3.12-93733-Win.exe"
+    Start-Process -FilePath "VirtualBox-4.3.12-93733-Win.exe" -ArgumentList "-silent -logging -msiparams INSTALLDIR=C:\VBox-4.3.12" -Wait
+    cd $env:APPVEYOR_BUILD_FOLDER
+- ps: |
+    While ((Test-NetConnection google.com -Port 80 -InformationLevel Quiet) -ne "True") {
+        echo "waiting for network..."
+        Start-Sleep 1
+    }
 install:
-- sudo wget https://download.virtualbox.org/virtualbox/5.2.22/virtualbox-5.2_5.2.22-126460~Ubuntu~bionic_amd64.deb
-- sudo dpkg -i virtualbox-5.2_5.2.22-126460~Ubuntu~bionic_amd64.deb
-- sudo apt-get -yq install python-pip
-- VBoxManage --version
-- sudo pip install ansible
-- ansible --version
-- sudo wget -nv https://releases.hashicorp.com/vagrant/2.2.1/vagrant_2.2.1_x86_64.deb
-- sudo dpkg -i vagrant_2.2.1_x86_64.deb
-- vagrant --version
-
+- set PATH=C:\Vagrant-1.7.2\HashiCorp\Vagrant\bin;C:\VBox-4.3.12;%PATH%
+- vagrant -v
+- VBoxManage -v
+- ssh -V
+- ipconfig /all
 build_script:
-- vagrant up
+- ps: Test-NetConnection google.com -Port 80
+- vagrant up || ssh vagrant@127.0.0.1 -p 2222 -i .vagrant\machines\default\virtualbox\private_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -vvv -C "pwd"
+- vagrant ssh -c "uname -a"
