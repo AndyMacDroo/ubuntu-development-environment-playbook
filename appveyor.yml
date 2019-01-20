@@ -17,4 +17,4 @@ install:
 - vagrant --version
 
 build_script:
-- vagrant up
+- vagrant up --debug
