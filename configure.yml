@@ -1,0 +1,14 @@
+---
+
+- hosts: all
+  become: yes
+
+  vars_files:
+   - vars/vars.yml
+   - vars/apt-packages.yml
+   - vars/apt-repository.yml
+
+  roles:
+   - packages
+   - tools
+   - config-files

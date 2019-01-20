@@ -1,0 +1,28 @@
+---
+
+apt_packages_for_docker:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - software-properties-common
+
+apt_packages_to_install:
+  - chromium-browser
+  - docker-ce
+  - git
+  - git-flow
+  - maven
+  - openjdk-8-jdk
+  - openjdk-11-jdk
+  - python
+  - python-pip
+  - python-lxml
+  - subversion
+  - terminator
+  - vagrant
+  - virtualbox
+
+apt_packages_to_remove:
+  - docker
+  - docker-engine
+  - docker.io

@@ -1,0 +1,33 @@
+---
+
+- name: Download node
+  shell: curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+
+- name: Install awscli
+  shell: pip install awscli==1.11.170 --upgrade --user
+
+- name: Install node
+  apt:
+    name: nodejs
+    state: present
+
+- name: Install slack
+  command: snap install slack --classic
+
+- name: Install spotify
+  command: snap install spotify
+
+- name: Install intelliJ
+  command: snap install intellij-idea-ultimate --classic --edge
+
+- name: Install pycharm
+  command: snap install pycharm-community --classic
+
+- name: Install postman
+  command: snap install postman
+
+- name: Install vscode
+  command: snap install vscode --classic
+
+- name: Install atom
+  command: snap install atom --classic  

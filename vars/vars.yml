@@ -1,0 +1,3 @@
+---
+
+username_on_the_host: "{{ lookup('env','USER') }}"
