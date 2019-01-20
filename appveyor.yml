@@ -2,10 +2,6 @@ version: '1.0.{build}-{branch}'
 image: Ubuntu1804
 platform: x64
 
-# Debugging via SSH
-init:
-- sh: curl -sflL 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh' | bash -e -
-
 cache:
 - /home/appveyor/.vagrant.d/boxes
 
