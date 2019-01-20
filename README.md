@@ -1,5 +1,4 @@
-# ubuntu-development-environment-playbook
-[![Build status](https://ci.appveyor.com/api/projects/status/h9jfg86ujd058s0b?svg=true)](https://ci.appveyor.com/project/AndyMacDroo/ubuntu-development-environment-playbook)
+# ubuntu-development-environment-playbook [![Build status](https://ci.appveyor.com/api/projects/status/h9jfg86ujd058s0b?svg=true)](https://ci.appveyor.com/project/AndyMacDroo/ubuntu-development-environment-playbook)
 
 Use ansible playbooks to provision an Ubuntu machine with what is required to get started with a basic development environment.
 
