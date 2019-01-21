@@ -9,7 +9,7 @@
   synchronize:
     src: '{{ files_source }}'
     dest: '{{ templates_destination }}'
-  ignore_errors: yes  
+  ignore_errors: yes
 
 - name: Create directories for templateable files
   file:
@@ -26,7 +26,10 @@
   when: item.state == 'file'
 
 - name: Move all files within fake user directory to current user directory
-  shell: rsync /home/user/ /home/{{ username_on_the_host }}/ -r
+  synchronize:
+    src: /home/user/
+    dest: /home/{{ username_on_the_host }}/
+  ignore_errors: yes
 
 - name: Remove fake user directory
   file: 
